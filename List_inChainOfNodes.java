@@ -58,7 +58,7 @@ public class List_inChainOfNodes{
         String stringRep = "tail-first [";
 
         for( Node node = getNode(size() - 1)
-           ; node != null
+           ; node != null && node.getPrevNode() != null
            ; node = node.getPrevNode() )
             stringRep += node.getCargo() + "`";
         return stringRep + "]";
