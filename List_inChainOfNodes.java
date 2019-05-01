@@ -4,6 +4,7 @@
 
 public class List_inChainOfNodes{
     private Node headSentinel;
+    private Node endSentinel;
 
 
     /**
@@ -11,6 +12,7 @@ public class List_inChainOfNodes{
      */
     public List_inChainOfNodes() {
         headSentinel = new Node( null, null, null);
+        endSentinel = new Node( null, null, null);
     }
 
     /**
@@ -57,7 +59,7 @@ public class List_inChainOfNodes{
     public String toString() {
         String stringRep = "tail-first [";
 
-        for( Node node = getNode(size() - 1)
+        for( Node node = endSentinel.getPrevNode()
            ; node != null && node.getPrevNode() != null
            ; node = node.getPrevNode() )
             stringRep += node.getCargo() + "`";
@@ -79,6 +81,7 @@ public class List_inChainOfNodes{
        Node newHead = new Node( val, headSentinel, oldHead);
        headSentinel.setNextNode(newHead);
        if (oldHead != null) oldHead.setPrevNode(newHead);
+        else endSentinel.setPrevNode(newHead);
       return true;
      }
 
@@ -145,9 +148,8 @@ public class List_inChainOfNodes{
       Node after = before.getNextNode();
       Node newNode = new Node( value, before, after);
       before.setNextNode(newNode);
-      if (index != size() - 1) {
-        after.setPrevNode(newNode);
-      }
+      if (index != size() - 1) after.setPrevNode(newNode);
+        else endSentinel.setPrevNode(newNode);
       return true;
     }
 
@@ -165,9 +167,8 @@ public class List_inChainOfNodes{
         Node ax = before.getNextNode();
         Node after = ax.getNextNode();
         Object saveForReturn = ax.getCargo();
-        if (index != size() - 1) {
-          after.setPrevNode(before);
-        }
+        if (index != size() - 1) after.setPrevNode(before);
+          else endSentinel.setPrevNode(before);
         before.setNextNode(after);
         return saveForReturn;
     }
